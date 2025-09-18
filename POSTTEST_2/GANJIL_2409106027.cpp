@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 using namespace std;
 
 struct Node {
@@ -10,7 +11,6 @@ struct Node {
 
 Node* head = NULL;
 
-// Variabel global, akan di-set setelah input NIM
 int jumlah_item_awal = 0;
 int posisi_sisip_item = 0;
 
@@ -27,26 +27,39 @@ void tambahItem(string nama, string tipe) {
 
 string pilihTipeItem() {
     int tipePilihan;
-    cout << "Pilih Tipe Item:\n";
-    cout << "  1. Weapon\n";
-    cout << "  2. Potion\n";
-    cout << "  3. Food\n";
-    cout << "  4. Drink\n";
-    cout << "  5. Armor\n";
-    cout << "Masukkan pilihan (1-5): ";
-    cin >> tipePilihan;
-    cin.ignore();
+    string tipeItem;
 
-    switch (tipePilihan) {
-        case 1: return "Weapon";
-        case 2: return "Potion";
-        case 3: return "Food";
-        case 4: return "Drink";
-        case 5: return "Armor";
-        default:
-            cout << "Input tipe salah! Item tidak ditambahkan.\n";
-            return "";
-    }
+    do {
+        cout << "Pilih Tipe Item:\n";
+        cout << "  1. Weapon\n";
+        cout << "  2. Potion\n";
+        cout << "  3. Food\n";
+        cout << "  4. Drink\n";
+        cout << "  5. Armor\n";
+        cout << "Masukkan pilihan (1-5): ";
+
+        if (!(cin >> tipePilihan)) {
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            cout << "Input harus berupa angka!\n\n";
+            continue; 
+        }
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n'); // buang enter
+
+        switch (tipePilihan) {
+            case 1: tipeItem = "Weapon"; break;
+            case 2: tipeItem = "Potion"; break;
+            case 3: tipeItem = "Food";   break;
+            case 4: tipeItem = "Drink";  break;
+            case 5: tipeItem = "Armor";  break;
+            default:
+                cout << "Pilihan tidak valid! Masukkan angka 1-5." << endl;
+                tipeItem = "";
+        }
+    } while (tipeItem == ""); 
+
+    return tipeItem;
 }
 
 void sisipItem(string nama, string tipe) {
@@ -156,8 +169,8 @@ int main() {
         cout << "\n========================================================" << endl ;
         cout << "           !  GAME INVENTORY MANAGEMENT  !" << endl ;
         cout << "--------------------------------------------------------" << endl ;
-        cout << "   Player : " << nama << "" << endl ;
-        cout << "   NIM    : " << nim  << "" << endl ;
+        cout << "   Player : Dimas Elang Satria" << endl ;
+        cout << "   NIM    : 2409106027" << endl ;
         cout << "========================================================" << endl ;
         cout << "   [1] - Tambah Item Baru" << endl ;
         cout << "   [2] - Sisipkan Item" << endl ;
